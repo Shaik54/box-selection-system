@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Order</title>
+</head>
+<body>
+
+    <h1>Available Products</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'place_order' %}">
+        {% csrf_token %}
+
+        <label>Customer Name:</label>
+        <input type="text" name="customer_name" required>
+
+        {% for product in products %}
+            <hr>
+
+            <h3>{{ product.name }}</h3>
+
+            <p>Dimensions: {{ product.length }} × {{ product.width }} × {{ product.height }} cm</p>
+            <p>Weight: {{ product.weight }} kg</p>
+
+            <label>Quantity:</label>
+            <input type="number" name="quantity_{{ product.id }}" min="0" value="0">
+
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+
+        <br><br>
+        <button type="submit">Place Order</button>
+
+    </form>
+
+</body>
+</html>

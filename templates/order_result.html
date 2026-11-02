@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Result</title>
+</head>
+<body>
+
+    <h1>Order Placed Successfully!</h1>
+
+    <p>Order Number: {{ order.order_number }}</p>
+    <p>Customer: {{ order.customer_name }}</p>
+
+    {% if box %}
+        <h2>Recommended Box</h2>
+        <p>Box Name: {{ box.name }}</p>
+        <p>Cost: {{ box.cost }}</p>
+        <p>Dimensions: {{ box.internal_length }} × {{ box.internal_width }} × {{ box.internal_height }} cm</p>
+    {% else %}
+        <h2>No suitable box available.</h2>
+    {% endif %}
+
+    <a href="/">Place Another Order</a>
+
+</body>
+</html>
