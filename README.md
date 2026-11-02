@@ -28,26 +28,104 @@ The system checks available boxes and recommends the lowest-cost box that satisf
 - Git and GitHub
 - Postman
 
-## Project Structure
+## Project Architecture
+
+The application is organized into three main parts:
+
+1. **Inventory app** – Manages products and shipping boxes.
+2. **Orders app** – Handles customer orders, order items, box recommendation logic, and automated tests.
+3. **Config** – Contains the main Django project settings and URL configuration.
+
+### Project Structure
 
 ```text
-box_selection_system/
+box-selection-system/
+│
 ├── config/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+│
 ├── inventory/
-├── orders/
 │   ├── models.py
-│   ├── services.py
 │   ├── views.py
 │   ├── urls.py
+│   └── admin.py
+│
+├── orders/
+│   ├── models.py
+│   ├── views.py
+│   ├── services.py
+│   ├── urls.py
+│   ├── admin.py
 │   └── tests.py
+│
 ├── templates/
 │   ├── products.html
 │   └── order_result.html
+│
 ├── manage.py
 ├── requirements.txt
-└── .gitignore
+├── .gitignore
+├── README.md
+├── AI_USAGE.md
+├── TEST_OUTPUT.md
+└── docs/
+    └── chat_transcript.pdf
 ```
 
+### Application Flow
+
+```text
+Customer
+   |
+   v
+Product Listing Page
+   |
+   v
+Select Products and Quantities
+   |
+   v
+Submit Order
+   |
+   v
+Django Order View
+   |
+   v
+Validate Customer Details and Quantities
+   |
+   v
+Save Order and Order Items
+   |
+   v
+Box Recommendation Service
+   |
+   v
+Calculate Weight and Volume
+   |
+   v
+Check Available Boxes
+   |
+   v
+Select Lowest-Cost Suitable Box
+   |
+   v
+Display Order Result
+```
+
+### Main Components
+
+| Component | Responsibility |
+|---|---|
+| `inventory/models.py` | Product and Box database models |
+| `inventory/views.py` | Displays available products |
+| `orders/models.py` | Order and OrderItem database models |
+| `orders/views.py` | Handles order submission and recommendation API |
+| `orders/services.py` | Contains box recommendation logic |
+| `orders/tests.py` | Tests recommendation logic and API responses |
+| `config/urls.py` | Connects application URL routes |
+| `templates/` | Contains HTML pages for product selection and order results |
 ## Box Recommendation Approach
 
 The recommendation process follows these steps:
@@ -119,9 +197,15 @@ The current recommendation algorithm uses individual product dimension checks, a
 
 ## What I Learned
  
-- Django models and database relationships.
-- Handling orders with multiple products.
-- Implementing box recommendation logic.
-- Writing and running unit tests.
-- Debugging and validating application functionality.
-- Using AI tools during development and reviewing their output.
+
+- **Django Application Development:** Learned how to structure a Django project using separate applications and understand the responsibilities of models, views, URL configurations, templates, and service files.
+
+- **Database Design and Relationships:** Gained practical experience creating database models for products, boxes, orders, and order items. Understood how foreign-key relationships connect orders with their corresponding products and quantities.
+
+- **Box Recommendation Algorithm:** Learned how to calculate total order weight and volume, compare product dimensions with box dimensions, check weight and volume constraints, and select the lowest-cost suitable box.
+
+- **Input Validation and Error Handling:** Gained experience handling invalid customer details, non-numeric quantities, negative quantities, and orders without selected products.
+
+- **API Development:** Learned how to create Django views that return JSON responses containing recommendation details and appropriate error responses when an order or suitable box is unavailable.
+
+- **AI-Assisted Development:** Learned how to use AI tools during development for understanding requirements, exploring implementation approaches, reviewing code suggestions, and making changes based on the actual project requirements.
